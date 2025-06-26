@@ -124,6 +124,7 @@ def set_nested_value(d, keys: list[str], value):
     """ Set the value for a nested dictionary hierarchy using a list of keys as the depth address
     """
     log = logging.getLogger(sys.argv[0])
+
     for key in keys[:-1]:
         if isinstance(d, list):
             if not (key.startswith('+[') or key.startswith('*[')):
@@ -163,6 +164,69 @@ def set_nested_value(d, keys: list[str], value):
             d = d.setdefault(key, {})  # Create nested dicts if they don't exist
     d[keys[-1]] = value  # set the leaf node value
 
+
+def expand_uri(uri, disparate=False, level=0):
+    res = []
+    if isinstance(uri, list):
+        for uri_elem in uri:
+            if disparate:
+                disparate_exp_res = expand_uri(uri_elem, False, level)
+                if isinstance(disparate_exp_res[0], list):
+                    for r in disparate_exp_res:
+                        res.append(r)
+                else:
+                    res.append(disparate_exp_res)
+            else:
+                parent_is_list = len(res) > 0 and isinstance(res[0], list)
+                if not isinstance(uri_elem, list):
+                    if parent_is_list:
+                        for i in range(len(res)):
+                            res[i].append(uri_elem)
+                    else:
+                            res.append(uri_elem)
+                else:
+                    # check for nested lists
+                    if level > 0 and isinstance(uri_elem, list):
+                        for sub in uri_elem:
+                            if isinstance(sub, list):
+                                raise ValueError("Nested lists are not allowed beyond the 3rd level")
+                    sub_tree = expand_uri(uri_elem, level=level+1)
+                    tree_res = []
+                    for tree in sub_tree:
+                        if parent_is_list:
+                            for i in range(len(res)):
+                                tree_res.append([*res[i], tree])
+                        else:
+                            tree_res.append([*res, tree])
+                    res = tree_res
+    else:
+        res.append(uri)
+    
+    if level == 0 and len(res) and not isinstance(res[0], list):
+        res = [res]
+    return res
+
+
+
+def handle_chemistry_combination(chemistry, keys, pspace, comb_dict):
+
+    log = logging.getLogger(sys.argv[0])
+    for key in keys:
+        if pspace[key]['target'] != 'chemistry':
+            continue
+        disparate = 'disparate' in pspace[key] and pspace[key]['disparate']
+        expanded_uri = expand_uri(pspace[key]['uri'], disparate=disparate)
+        dims = len(expanded_uri)
+
+        if dims > 1:
+            if not isinstance(comb_dict[key], list):
+                raise ValueError(f"requirement '{pspace[key]['uri']}' has dims>1, but value is a scalar")
+            elif dims != len(comb_dict[key]):
+                raise ValueError('requirement uri has different dimensionality than value field')
+        log.debug(f"uris: {expanded_uri}")
+        for i, uri in enumerate(expanded_uri):
+            set_nested_value(chemistry, uri,
+                             comb_dict[key] if dims == 1 else comb_dict[key][i])
 
 def main():
     parser = argparse.ArgumentParser(
@@ -251,17 +315,10 @@ def main():
         with open(res_dir / 'index.json', 'x') as index:
             json.dump(comb_dict, index, indent=4)
 
-        # handle the chemistry file
-        for key in keys:
-            if pspace[key]['target'] != 'chemistry':
-                continue
-           
-            istuple = isinstance(pspace[key]['uri'][0], list)
-            uris = pspace[key]['uri'] if istuple else [pspace[key]['uri']]
-
-            for i,uri in enumerate(uris):
-                set_nested_value(chemistry, uri,
-                                 comb_dict[key] if not istuple else comb_dict[key][i])
+        # update the chemistry specification
+        # Deepcopying of chemistry should not be necessary, as all the
+        # combination's fields are written every time.
+        handle_chemistry_combination(chemistry, keys, pspace, comb_dict)
 
         with open(res_dir / 'chemistry.json', 'x') as run_chem:
             json.dump(chemistry, run_chem, indent=4)
