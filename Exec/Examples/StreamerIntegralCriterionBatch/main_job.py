@@ -9,9 +9,12 @@
 import json
 import itertools
 import os
+import shutil
 from pathlib import Path
 import importlib.util
 import sys
+import re
+import fileinput
 
 from subprocess import Popen
 import argparse
@@ -206,28 +209,90 @@ def expand_uri(uri, disparate=False, level=0):
         res = [res]
     return res
 
+def handle_chemistry_combination(chemistry, key, pspace, comb_dict):
+    disparate = 'disparate' in pspace[key] and pspace[key]['disparate']
+    expanded_uri = expand_uri(pspace[key]['uri'], disparate=disparate)
+    dims = len(expanded_uri)
 
-def handle_chemistry_combination(chemistry, keys, pspace, comb_dict):
+    if dims > 1:
+        if not isinstance(comb_dict[key], list):
+            raise ValueError(f"requirement '{pspace[key]['uri']}' has dims>1 "
+                             "but value is a scalar")
+        elif dims != len(comb_dict[key]):
+            raise ValueError("requirement uri has different dimensionality "
+                             "than value field")
+    for i, uri in enumerate(expanded_uri):
+        set_nested_value(chemistry, uri,
+                         comb_dict[key] if dims == 1 else comb_dict[key][i])
+
+
+def handle_input_combination(input_file, key, pspace, comb_dict):
+    """
+    warning: writes directly to input_file, search and replace mode
+    """
+    if not 'uri' in pspace[key]:
+        raise ValueError(f'No uri for input requirement: {key}')
+    if not isinstance(pspace[key]['uri'], str):
+        raise ValueError(f'input requirement can only be a scalar string: {key}')
+    if pspace[key]['uri'] == "":
+        raise ValueError(f'empty uri string for: {key}')
+    uri = pspace[key]['uri']
+
+    found_line = False
+
+    for line in fileinput.input(input_file, inplace=True):  # every print writes to file
+        if not found_line and line.startswith(pspace[key]['uri']):
+            content = line
+            commentpos = content.find('#')
+            comment = ""
+            if commentpos != -1:
+                comment = line[commentpos:]
+                content = line[:commentpos]
+
+            eq_pos = content.find('=')
+            if eq_pos == -1:
+                continue
+            address = content[:eq_pos]
+            value = content[eq_pos+1:]
+            
+            value_whitespace = re.match(r'\s*', value).group()
+
+            if address.strip() == uri:
+                found_line = True
+                if isinstance(comb_dict[key], list):
+                    try:
+                        float(comb_dict[key][0])
+                        isfloat = True
+                    except:
+                        isfloat = False
+
+                    if isfloat:
+                        newvalue = " ".join([f'{v:g}' for v in comb_dict[key]])
+                    else:
+                        newvalue = " ".join(comb_dict[key])
+                else:
+                    newvalue = comb_dict[key]
+                newline = f'{address}={value_whitespace}{newvalue}'
+                newline_len = len(newline)
+                if commentpos != -1:
+                    if newline_len > commentpos:
+                        newline += " " + comment
+                    else:
+                        newline += f'{" "*(commentpos-newline_len)}# ' + \
+                                f'[script-altered]{comment[1:]}'
+                line = newline
+        sys.stdout.write(line)
+
+def handle_combination(keys, pspace, comb_dict, chemistry, input_file):
     log = logging.getLogger(sys.argv[0])
     for key in keys:
-        if pspace[key]['target'] != 'chemistry':
-            continue
-        disparate = 'disparate' in pspace[key] and pspace[key]['disparate']
-        expanded_uri = expand_uri(pspace[key]['uri'], disparate=disparate)
-        dims = len(expanded_uri)
-
-        if dims > 1:
-            if not isinstance(comb_dict[key], list):
-                raise ValueError(f"requirement '{pspace[key]['uri']}' has dims>1 "
-                                 "but value is a scalar")
-            elif dims != len(comb_dict[key]):
-                raise ValueError("requirement uri has different dimensionality "
-                                 "than value field")
-        log.debug(f"uris: {expanded_uri}")
-        for i, uri in enumerate(expanded_uri):
-            set_nested_value(chemistry, uri,
-                             comb_dict[key] if dims == 1 else comb_dict[key][i])
-
+        match pspace[key]['target']:
+            case 'chemistry':
+                handle_chemistry_combination(chemistry, key, pspace, comb_dict)
+            case 'input':
+                handle_input_combination(input_file, key, pspace, comb_dict)
+            case _:
+                continue
 
 def main():
     parser = argparse.ArgumentParser(
@@ -243,6 +308,9 @@ def main():
                         type=Path, help="parameter space input file. "
                         "Json read directly, or if .py file look for 'pspace' "
                         "dictionary")
+    parser.add_argument("--master-input-file",
+                        default=Path("master.inputs"), type=Path,
+                        help="master input file for chombo-discharge")
     parser.add_argument("--array-job-prefix", default='run_', type=str,
                         help="prefix for subdirectories in the 'output-dir'")
     args, unknownargs = parser.parse_known_args()
@@ -311,14 +379,20 @@ def main():
     chemistry = get_chemistry_dict(args.chemistry_file)
 
     log.info("Creating and populating working directories for array jobs")
+    output_name_pattern = '{job_prefix}{i:0{num_digits}d}'
+
     for i, combination in enumerate(combinations):
 
-        output_name = f'{args.array_job_prefix}{i:0{num_digits}d}'
+        output_name = output_name_pattern.format(job_prefix=args.array_job_prefix, i=i,
+                                                 num_digits=num_digits)
         comb_dict = dict(zip(keys, combination))
         log.debug(f'{output_name} --> {json.dumps(comb_dict)}')
 
         res_dir = args.output_dir / output_name
         os.mkdir(res_dir)  # yes, crash if you must
+
+        run_input = res_dir / 'run.inputs'
+        shutil.copy(args.master_input_file, run_input)
 
         # Dump an json index file with the parameter space combination.
         # This might not be needed, as the values can be found from other input
@@ -326,18 +400,52 @@ def main():
         with open(res_dir / 'index.json', 'x') as index:
             json.dump(comb_dict, index, indent=4)
 
-        # update the chemistry specification
+        # update the chemistry and input specification
         # Deepcopying of chemistry should not be necessary, as all the
-        # combination's fields are written every time.
-        handle_chemistry_combination(chemistry, keys, pspace, comb_dict)
-
+        # combination's fields are written every time in this loop.
+        handle_combination(keys, pspace, comb_dict, chemistry, run_input)
+        
         with open(res_dir / 'chemistry.json', 'x') as run_chem:
             json.dump(chemistry, run_chem, indent=4)
+        
+        # copy in the rest of the resources
+        shutil.copy('bolsig_air.dat', res_dir)
+        shutil.copy('transport_data.txt', res_dir)
 
-    # find_electron_placement(log, unknownargs)
-    # step_sic(log, args.np, unknownargs)
-    log.info('Batch simulation finished')
+    # we now now the number of combination runs to perform, the next task is to
+    # determine the number of voltages to calculate. Robert need's to do his magic
 
+    # For each combination a inception stepper run is needed followed by
+    # the voltages as specified in the master.inputs file:
+    #     DischargeInceptionStepper.voltage_lo    = 10E3
+    #     DischargeInceptionStepper.voltage_hi    = 30E3
+    #     DischargeInceptionStepper.voltage_steps = 9
+    #
+    # where the number of voltages tested is voltage_steps+2
+
+    # it should be possible to run sbatch inside of an sbatch script
+    num_jobs = num_combs
+    job_name='inception_stepper'
+
+    cmdstr = f'sbatch --array=1-{num_jobs} --chdir={args.output_dir}
+    --job-name={job_name} inception_stepper.py'
+    p = Popen(cmdstr, shell=True, stdout=PIPE, encoding='utf-8')
+
+    job_id = -1
+    while True: # wait until sbatch is complete
+        line = p.stdout.readline()
+        if line:
+            m = re.match('^Submitted batch job (?P<job_id>[0-9]+)', line)
+            if m:
+                job_id = m.groupdict()['job_id']
+
+        if p.poll() is not None:
+            break
+
+    if job_id != -1:
+        log.info("Submitted array job (inception stepper over combinations)."
+                 f" [slurm job id = {job_id}")
+    {job_id}
 
 if __name__ == '__main__':
     main()
