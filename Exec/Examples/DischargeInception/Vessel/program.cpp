@@ -20,12 +20,17 @@ main(int argc, char* argv[])
   // Read the input file into the ParmParse table
   const std::string input_file = argv[1];
   ParmParse         pp(argc - 2, argv + 2, NULL, input_file.c_str());
+  
+  ParmParse di("DischargeInception");
 
   // Read BOLSIG+ data into alpha and eta coefficients
-  const Real N  = 2.45E25;
   const Real O2 = 0.2;
   const Real N2 = 0.8;
-  const Real T  = 300.0;
+  const Real T = 300;
+
+  Real p;
+  di.get("pressure", p);
+  const Real N  = p/(ChomboDischarge::Units::kb*T); // 2.45E25;
 
   LookupTable1D<> ionizationData = DataParser::fractionalFileReadASCII("transport_data.txt",
                                                                        "E/N (Td)	Townsend ioniz. coef. alpha/N (m2)",
@@ -54,7 +59,6 @@ main(int argc, char* argv[])
   Real secondTownsend = 0.0;
 
   ParmParse li("lightning_impulse");
-  ParmParse di("DischargeInception");
   li.get("peak", peak);
   li.get("start", t0);
   li.get("tail_time", t1);
