@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 #SBATCH --account=nn12041k
-#SBATCH --job-name=inception_stepper
 ## #SBATCH --nodes=4
 ## #SBATCH --ntasks-per-node=128
 #SBATCH --time=0-00:10:00
@@ -19,8 +18,6 @@ import subprocess
 
 # local imports
 sys.path.append(os.getcwd())  # needed for local imports from slurm scripts
-
-from parse_report import parse_report_file
 
 if __name__ == '__main__':
 
@@ -52,16 +49,9 @@ if __name__ == '__main__':
         if res is not None:
             break
 
-    with open('structure.json') as structure_file:
-        structure = json.load(structure_file)
-
-    job_prefix = 'run_'
-    if 'output_dir_prefix' in structure:
-        job_prefix = structure['output_dir_prefix']
-
-    dim = 2
-    if 'dim' in structure:
-        dim = structure['dim']
+    with open('index.json') as index_file:
+        index_dict = json.load(index_file)
+    job_prefix = index_dict['prefix']
 
     dpattern = f'^({job_prefix}[0]*{task_id:d})$'  # account for possible leading zeros
     dname = [f for f in os.listdir() if (os.path.isdir(f) and re.match(dpattern, f))][0]
@@ -77,10 +67,8 @@ if __name__ == '__main__':
     if not input_file:
         raise ValueError('missing *.inputs file in run directory')
 
-    executable = Path("..") / \
-            structure['program'].format(DIMENSIONALITY=structure['dim'])
-    cmd = f"mpirun {executable} {input_file} Random.seed={task_id:d}"
-    log.info(f"Running inception stepper: {cmd}")
+    cmd = f"mpirun program {input_file} Random.seed={task_id:d}"
+    log.info(f"cmdstr: '{cmd}'")
     p = subprocess.Popen(cmd, shell=True, executable="/bin/bash")
     
     while True:
