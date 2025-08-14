@@ -12,8 +12,6 @@ import sys
 import json
 import re
 import logging
-from pathlib import Path
-
 import subprocess
 
 # local imports
@@ -28,7 +26,7 @@ if __name__ == '__main__':
     sh.setFormatter(formatter)
     log.addHandler(sh)
     log.setLevel(logging.INFO)
-    
+
     S_ENV = 'SLURM_ARRAY_TASK_ID'
     if S_ENV not in os.environ:
         raise RuntimeError(f'${S_ENV} not found in os.environ[]. Run this'
@@ -70,7 +68,7 @@ if __name__ == '__main__':
     cmd = f"mpirun program {input_file} Random.seed={task_id:d}"
     log.info(f"cmdstr: '{cmd}'")
     p = subprocess.Popen(cmd, shell=True, executable="/bin/bash")
-    
+
     while True:
         res = p.poll()
         if res is not None:
