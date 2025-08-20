@@ -1,13 +1,5 @@
 #!/usr/bin/env python
 
-#SBATCH --account=nn12041k
-#SBATCH --nodes=4 --ntasks-per-node=128
-#SBATCH --time=0-00:10:00
-#SBATCH --partition=normal
-#SBATCH --time=0-00:10:00
-#SBATCH --output=R-%x.%A-%a.out
-#SBATCH --error=R-%x.%A-%a.err
-
 import os
 import sys
 import json
@@ -34,20 +26,6 @@ if __name__ == '__main__':
                            ' script through sbatch --array=... !!')
     task_id = int(os.environ['SLURM_ARRAY_TASK_ID'])
     log.info(f'found task id: {task_id}')
-
-    # SET UP sigma2 MODULES HERE
-    commands = [
-            'set -o errexit',
-            'set -o nounset',
-            'module restore system',
-            'module load foss/2023a'
-            'module load HDF5/1.14.0-gompi-2023a'
-            ]
-    p = subprocess.Popen('; '.join(commands), shell=True, executable='/bin/bash')
-    while True:
-        res = p.poll()
-        if res is not None:
-            break
 
     with open('index.json') as index_file:
         index_dict = json.load(index_file)
