@@ -51,6 +51,7 @@ ItoKMCJSON::ItoKMCJSON()
   // Initialize the plasma species
   this->initializePlasmaSpecies();
   this->initializeParticles();
+  this->initializeDensities();
   this->initializeMobilities();
   this->initializeDiffusionCoefficients();
   this->initializeTemperatures();
@@ -1306,6 +1307,52 @@ ItoKMCJSON::initializeParticles()
 }
 
 void
+ItoKMCJSON::initializeDensities()
+{
+  CH_TIME("ItoKMCJSON::initializeDensities");
+  if (m_verbose) {
+    pout() << m_className + "::initializeDensities" << endl;
+  }
+
+  const std::string baseError = "ItoKMCJSON::initializeDensities";
+
+  for (const auto& species : m_json["plasma species"]) {
+    const std::string speciesID   = species["id"].get<std::string>();
+    const std::string baseErrorID = baseError + " and found 'initial particles' for species '" + speciesID + "'";
+
+    List<PointParticle> initialParticles;
+
+    // Put the particles in the solvers.
+    const SpeciesType& speciesType = m_plasmaSpeciesTypes.at(speciesID);
+    if (species.contains("initial density")) {
+      const Real density = species["initial density"].get<Real>();
+
+      if (density < 0.0) {
+        this->throwParserError(baseError + " but 'initial density' can not be negative");
+      }
+
+      // Make the initial density function.
+      auto initFunc = [density](const RealVect x, const Real t) -> Real {
+        return density;
+      };
+
+      if (speciesType == SpeciesType::CDR) {
+        const int idx = m_cdrSpeciesMap.at(speciesID);
+
+        auto species = static_cast<ItoKMCCDRSpecies*>(&(*m_cdrSpecies[idx]));
+
+        species->setInitialData(initFunc);
+      }
+      else if (speciesType == SpeciesType::Ito) {
+        const int idx = m_itoSpeciesMap.at(speciesID);
+
+        m_itoSpecies[idx]->setInitialDensity(initFunc);
+      }
+    }
+  }
+}
+
+void
 ItoKMCJSON::initializeMobilities()
 {
   CH_TIME("ItoKMCJSON::initializeMobilities");
@@ -1922,7 +1969,7 @@ ItoKMCJSON::initializeSurfaceEmission(const std::string a_surface)
     pout() << m_className + "::initializeSurfaceEmission" << endl;
   }
 
-  const std::string baseError = "ItoKMCJSON::initializePhotoReactions";
+  const std::string baseError = "ItoKMCJSON::initializeSufaceEmission";
 
   std::string reactionSpecifier;
   if (a_surface == "dielectric") {

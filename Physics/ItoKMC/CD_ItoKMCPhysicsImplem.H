@@ -35,20 +35,21 @@ inline ItoKMCPhysics::ItoKMCPhysics() noexcept
   m_photoReactions.clear();
 
   // Some default settings (mostly in case user forgets to call the parsing algorithms).
-  m_isDefined         = false;
-  m_debug             = true;
-  m_hasKMCSolver      = false;
-  m_downstreamSpecies = -1;
-  m_maxNewParticles   = 32;
-  m_maxNewPhotons     = 32;
-  m_Ncrit             = 5;
-  m_eps               = 2.0;
-  m_NSSA              = 5;
-  m_maxIter           = 10;
-  m_SSAlim            = 5.0;
-  m_exitTol           = 1.E-6;
-  m_algorithm         = Algorithm::ExplicitEuler;
-  m_particlePlacement = ParticlePlacement::Random;
+  m_isDefined             = false;
+  m_debug                 = true;
+  m_hasKMCSolver          = false;
+  m_incrementNewParticles = false;
+  m_downstreamSpecies     = -1;
+  m_maxNewParticles       = 32;
+  m_maxNewPhotons         = 32;
+  m_Ncrit                 = 5;
+  m_eps                   = 2.0;
+  m_NSSA                  = 5;
+  m_maxIter               = 10;
+  m_SSAlim                = 5.0;
+  m_exitTol               = 1.E-6;
+  m_algorithm             = Algorithm::ExplicitEuler;
+  m_particlePlacement     = ParticlePlacement::Random;
 }
 
 inline ItoKMCPhysics::~ItoKMCPhysics() noexcept
@@ -218,6 +219,7 @@ ItoKMCPhysics::parsePPC() noexcept
 
   pp.get("max_new_particles", m_maxNewParticles);
   pp.get("max_new_photons", m_maxNewPhotons);
+  pp.get("increment_weights", m_incrementNewParticles);
 }
 
 inline void
@@ -330,8 +332,7 @@ ItoKMCPhysics::initialSigma(const Real a_time, const RealVect a_pos) const
 inline void
 ItoKMCPhysics::advanceKMC(Vector<FPR>&            a_numParticles,
                           Vector<FPR>&            a_numNewPhotons,
-                          Real&                   a_criticalDt,
-                          Real&                   a_nonCriticalDt,
+                          Real&                   a_physicsDt,
                           const Vector<Real>&     a_phi,
                           const Vector<RealVect>& a_gradPhi,
                           const Real              a_dt,
@@ -464,7 +465,8 @@ ItoKMCPhysics::advanceKMC(Vector<FPR>&            a_numParticles,
     MayDay::Warning("ItoKMCPhysics::advanceKMC -- charge not conserved!");
   }
 
-  // Compute the critical and non-critical time steps
+  // Compute a time step using the non-critical reactions. We could have done this using ALL reactions, but I take for granted
+  // that the user will segregate the critical reactions anyways.
   const auto partitionedReactions = m_kmcSolver.partitionReactions(m_kmcState);
 
   const auto& criticalReactions    = partitionedReactions.first;
@@ -473,8 +475,7 @@ ItoKMCPhysics::advanceKMC(Vector<FPR>&            a_numParticles,
   const auto criticalPropensities    = m_kmcSolver.propensities(m_kmcState, criticalReactions);
   const auto nonCriticalPropensities = m_kmcSolver.propensities(m_kmcState, nonCriticalReactions);
 
-  a_criticalDt    = m_kmcSolver.getCriticalTimeStep(criticalPropensities);
-  a_nonCriticalDt = m_kmcSolver.getNonCriticalTimeStep(m_kmcState, nonCriticalReactions, nonCriticalPropensities);
+  a_physicsDt = m_kmcSolver.computeDt(m_kmcState, nonCriticalReactions, nonCriticalPropensities, 1.0);
 }
 
 inline void
@@ -555,7 +556,7 @@ ItoKMCPhysics::reconcileParticles(Vector<List<ItoParticle>*>& a_particles,
     if (diff > 0LL) {
       const long long numParticles = static_cast<long long>(a_particles[i]->length());
 
-      if (numParticles > 0LL) {
+      if (numParticles > 0LL && m_incrementNewParticles) {
         // If the cell already contains particles, partition the new particle weights and increment the existing particles
         const std::vector<long long> particleWeights = ParticleManagement::partitionParticleWeights(diff, numParticles);
 
