@@ -1,0 +1,722 @@
+Driver::setupAndRun(std::string)
+EBIndexSpace::define - From domain
+  Building finest level...
+Entering EBISLevel::EBISLevel called by EBIndexSpace::buildFirstLevel...
+Exiting EBISLevel::EBISLevel called by EBIndexSpace::buildFirstLevel...
+ebis_after_first_level_bui|Mem Usage: OS=   178.914 (vm=  9098.758) MT_peak=     0.442 MT_current=     0.285  OSPeakRSS=   178.914 (vm=  9098.758) (MB)
+    irreg VoFs    : 60092
+    arcs          : 302304
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 1...
+    irreg VoFs    : 14608
+    arcs          : 73960
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 2...
+    irreg VoFs    : 3864
+    arcs          : 19780
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 3...
+    irreg VoFs    : 1068
+    arcs          : 5572
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 4...
+    irreg VoFs    : 316
+    arcs          : 1696
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 5...
+    irreg VoFs    : 56
+    arcs          : 336
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 6...
+    irreg VoFs    : 28
+    arcs          : 168
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 7...
+    irreg VoFs    : 16
+    arcs          : 96
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 8...
+    irreg VoFs    : 8
+    arcs          : 48
+    multi VoFs    : 0
+    zero VoFs     : 0
+    zero VoFs arcs: 0
+
+  Building level 9...
+    Empty
+
+       ebis_leaving_define|Mem Usage: OS=   179.410 (vm=  9098.758) MT_peak=     0.513 MT_current=     0.292  OSPeakRSS=   179.410 (vm=  9098.758) (MB)
+MemoryReport::getMaxMinMemoryUsage:	 Max peak = 8.23422	 Min peak = 0.426722	 Max unfreed = 3.92554	 Min unfreed = 0.224434
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 22 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 20 (MB)
+	Max peak memory       = 23 (MB)
+=======================================================================
+
+Driver::writePlotFile(string)
+Driver::run(Real, Real, int)
+=================================
+Driver::run -- starting run
+
+=======================================================================
+Driver::Grid report - timestep = 0
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 21 (MB)
+	Max peak memory       = 28 (MB)
+=======================================================================
+
+
+Driver::Time step report -- Time step #1
+                                   Time  = 1.30133e-08
+                                   dt    = 1.30133e-08
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 1.00709e-14 (e)
+                                   Qplus       = 1.60218e-19
+                                   Qminu       = -8.65175e-18
+                                   Qsurf       = 0
+                                   Qtot        = -8.49154e-18
+                                   CFL (Ito)   = 5.05171
+                                   CFL (CDR)   = 7.23887e-317
+                                   dt/dt_relax = 2.9287e-06
+                                   #Particles  = 0 (54)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 17 (on rank = 199)
+                                   #Avg. part. = 0.105469
+                                   #Dev. part. = 1.1183 (1060.31%)
+                                   Delta E     = 3.05455e-05 (%)
+                                --  0.10 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 00s 144ms
+                                -- Last time step        : 000h 00m 00s 144ms
+                                -- Wall time per/1E-06   : 000h 00m 11s 097ms
+                                -- Estimated remaining   : 000h 02m 24s 272ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::Time step report -- Time step #2
+                                   Time  = 2.5866e-08
+                                   dt    = 1.28527e-08
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 6.43429e-15 (e)
+                                   Qplus       = 1.60218e-19
+                                   Qminu       = -7.20979e-18
+                                   Qsurf       = 0
+                                   Qtot        = -7.04958e-18
+                                   CFL (Ito)   = 5.0503
+                                   CFL (CDR)   = 7.14955e-317
+                                   dt/dt_relax = 8.01674e-07
+                                   #Particles  = 0 (46)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 13 (on rank = 224)
+                                   #Avg. part. = 0.0898438
+                                   #Dev. part. = 0.912015 (1015.11%)
+                                   Delta E     = 3.22038e-05 (%)
+                                --  0.20 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 00s 307ms
+                                -- Last time step        : 000h 00m 00s 125ms
+                                -- Wall time per/1E-06   : 000h 00m 09s 798ms
+                                -- Estimated remaining   : 000h 02m 33s 330ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::Time step report -- Time step #3
+                                   Time  = 3.97109e-08
+                                   dt    = 1.38449e-08
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 3.21714e-15 (e)
+                                   Qplus       = 1.60218e-19
+                                   Qminu       = -6.24849e-18
+                                   Qsurf       = 0
+                                   Qtot        = -6.08827e-18
+                                   CFL (Ito)   = 5.04923
+                                   CFL (CDR)   = 7.70148e-317
+                                   dt/dt_relax = 9.70145e-07
+                                   #Particles  = 0 (40)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 11 (on rank = 199)
+                                   #Avg. part. = 0.078125
+                                   #Dev. part. = 0.774187 (990.959%)
+                                   Delta E     = 6.1077e-05 (%)
+                                --  0.30 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 00s 502ms
+                                -- Last time step        : 000h 00m 00s 159ms
+                                -- Wall time per/1E-06   : 000h 00m 11s 491ms
+                                -- Estimated remaining   : 000h 02m 47s 152ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::Time step report -- Time step #4
+                                   Time  = 5.5043e-08
+                                   dt    = 1.53322e-08
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 3.21714e-15 (O2+)
+                                   Qplus       = 1.60218e-19
+                                   Qminu       = -5.76784e-18
+                                   Qsurf       = 0
+                                   Qtot        = -5.60762e-18
+                                   CFL (Ito)   = 5.04575
+                                   CFL (CDR)   = 8.52879e-317
+                                   dt/dt_relax = 1.08852e-06
+                                   #Particles  = 0 (37)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 10 (on rank = 199)
+                                   #Avg. part. = 0.0722656
+                                   #Dev. part. = 0.704791 (975.279%)
+                                   Delta E     = 1.7563e-05 (%)
+                                --  0.40 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 00s 667ms
+                                -- Last time step        : 000h 00m 00s 124ms
+                                -- Wall time per/1E-06   : 000h 00m 08s 114ms
+                                -- Estimated remaining   : 000h 02m 46s 314ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::Time step report -- Time step #5
+                                   Time  = 7.73264e-08
+                                   dt    = 2.22834e-08
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 3.21714e-15 (O2+)
+                                   Qplus       = 1.60218e-19
+                                   Qminu       = -5.60762e-18
+                                   Qsurf       = 0
+                                   Qtot        = -5.4474e-18
+                                   CFL (Ito)   = 5.06333
+                                   CFL (CDR)   = 1.23955e-316
+                                   dt/dt_relax = 1.24874e-06
+                                   #Particles  = 0 (36)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 10 (on rank = 199)
+                                   #Avg. part. = 0.0703125
+                                   #Dev. part. = 0.689583 (980.74%)
+                                   Delta E     = 1.73613e-05 (%)
+                                --  0.50 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 00s 830ms
+                                -- Last time step        : 000h 00m 00s 123ms
+                                -- Wall time per/1E-06   : 000h 00m 05s 559ms
+                                -- Estimated remaining   : 000h 02m 45s 214ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::regrid - Didn't find any new cell tags. Skipping the regrid step
+
+
+=======================================================================
+Driver::Grid report - timestep = 5
+---------------------------------------------------------
+	MPI ranks................ = 512
+	Finest level............. = 2
+	Finest AMR domain........ = 512 x 192 x 512
+	Coarsest AMR domain...... = 128 x 48 x 128
+	Refinement ratios........ = 2 2 
+	Grid sparsity............ = 0.0172526
+	Finest dx................ = 0.000234375
+	Total number boxes....... = 212
+	Number of cells.......... = 868,352
+	Including ghost cells.... = 1,696,000
+	Valid # of cells......... = 858,112
+	Total # of boxes (lvl)... = 192  16  4  
+	Total # of cells (lvl)... = 786,432  65,536  16,384  
+	Valid # of cells (lvl)... = 778,240  63,488  16,384  
+	**************
+	Realm = primal
+	...Proc. # of valid cells... = 0
+	...Including ghost cells.... = 0
+	...Proc. # of boxes......... = 0
+	...Proc. # of boxes (lvl)... = 0  0  0  
+	...Proc. # of cells (lvl)... = 0  0  0  
+	Unfreed memory        = 3 (MB)
+	Peak memory usage     = 6 (MB)
+	Min unfreed memory    = 2 (MB)
+	Min peak memory       = 2 (MB)
+	Max unfreed memory    = 21 (MB)
+	Max peak memory       = 29 (MB)
+=======================================================================
+
+
+Driver::Time step report -- Time step #6
+                                   Time  = 1.15871e-07
+                                   dt    = 3.85449e-08
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 3.21714e-15 (O2+)
+                                   Qplus       = 1.60218e-19
+                                   Qminu       = -5.4474e-18
+                                   Qsurf       = 0
+                                   Qtot        = -5.28718e-18
+                                   CFL (Ito)   = 5.10953
+                                   CFL (CDR)   = 2.14413e-316
+                                   dt/dt_relax = 8.5914e-07
+                                   #Particles  = 0 (35)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 10 (on rank = 199)
+                                   #Avg. part. = 0.0683594
+                                   #Dev. part. = 0.676918 (990.234%)
+                                   Delta E     = 1.56567e-05 (%)
+                                --  0.60 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 01s 014ms
+                                -- Last time step        : 000h 00m 00s 123ms
+                                -- Wall time per/1E-06   : 000h 00m 03s 200ms
+                                -- Estimated remaining   : 000h 02m 48s 055ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::Time step report -- Time step #7
+                                   Time  = 3.00809e-06
+                                   dt    = 2.89222e-06
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 106.62 (Td)
+                                   Max n/N     = 3.21714e-15 (O2+)
+                                   Qplus       = 5.02557e-06
+                                   Qminu       = -5.02557e-06
+                                   Qsurf       = 0
+                                   Qtot        = -3.68459e-18
+                                   CFL (Ito)   = 5.00053
+                                   CFL (CDR)   = 1.60885e-314
+                                   dt/dt_relax = 8.12998e-07
+                                   #Particles  = 0 (538)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 262 (on rank = 222)
+                                   #Avg. part. = 1.05078
+                                   #Dev. part. = 16.3134 (1552.5%)
+                                   Delta E     = 3.41606e-05 (%)
+                                --  0.70 percentage of time steps completed
+                                --  0.00 percentage of simulation time completed
+                                -- Elapsed time          : 000h 00m 01s 172ms
+                                -- Last time step        : 000h 00m 00s 123ms
+                                -- Wall time per/1E-06   : 000h 00m 00s 042ms
+                                -- Estimated remaining   : 000h 02m 46s 382ms
+                                -- Unfreed memory        : 0(MB)
+                                -- Peak memory usage     : 0(MB)
+                                -- Max unfreed memory    : 0(MB)
+                                -- Max peak memory usage : 0(MB)
+
+Driver::Time step report -- Time step #8
+                                   Time  = 3.00835e-06
+                                   dt    = 2.57054e-10
+                                   dt restricted by 'Advection (Ito)'
+                                   Emax        = 173775 (Td)
+                                   Max n/N     = 0.062824 (O2+)
+                                   Qplus       = 0.65051
+                                   Qminu       = -0.0223672
+                                   Qsurf       = 0
+                                   Qtot        = 0.628142
+                                   CFL (Ito)   = 0.101006
+                                   CFL (CDR)   = 1.42991e-318
+                                   dt/dt_relax = 113687
+                                   #Particles  = 0 (3,680)
+                                   #EB part.   = 0 (0)
+                                   #Dom. part. = 0 (0)
+                                   #Src. part. = 0 (0)
+                                   #Min part.  = 0 (on rank = 0)
+                                   #Max part.  = 1356 (on rank = 222)
+                                   #Avg. part. = 7.1875
+                                   #Dev. part. = 93.9829 (1307.59%)
+                                   Delta E     = 407615 (%)
+
